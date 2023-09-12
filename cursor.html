@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor Personalizado com SVG</title>
+    <style>
+        html {
+            cursor: none;
+        }
+
+        #custom-cursor {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        #custom-cursor svg {
+            fill: rgb(214, 52, 147); /* Cor do cursor */
+            width: 20px; /* Tamanho do cursor */
+            height: auto; /* Tamanho do cursor */
+        }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor">
+        <svg xmlns="circle" width="24" height="24" viewBox="0 0 24 24">
+            <!-- Conteúdo do seu SVG -->
+            <circle cx="12" cy="12" r="10" />
+        </svg>
+    </div>
+
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            const customCursor = document.getElementById('custom-cursor');
+            customCursor.style.left = e.clientX + 'px';
+            customCursor.style.top = e.clientY + 'px';
+        });
+    </script>
+</body>
+</html>

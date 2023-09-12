@@ -6,12 +6,18 @@ const tools = document.querySelectorAll(".button__tool")
 const sizeButtons = document.querySelectorAll(".button__size")
 const buttonClear = document.querySelector(".button__clear")
 
+const customCursor = document.querySelector('#custom-cursor');
+const customCursorSvg = document.querySelector('#custom-cursor svg');
+
 let brushSize = 20
 let isPainting = false
 let activeTool = "brush"
+let xAdjust = 10
+let yAdjust = 10
 
 inputColor.addEventListener("change", ({ target }) => {
     ctx.fillStyle = target.value
+    customCursorSvg.style.fill = target.value;
 })
 
 canvas.addEventListener("mousedown", ({ clientX, clientY }) => {
@@ -27,6 +33,10 @@ canvas.addEventListener("mousedown", ({ clientX, clientY }) => {
 })
 
 canvas.addEventListener("mousemove", ({ clientX, clientY }) => {
+
+    customCursor.style.left = clientX + 'px';
+    customCursor.style.top = clientY + 'px';
+
     if (isPainting) {
         if (activeTool == "brush") {
             draw(clientX, clientY)
@@ -47,8 +57,8 @@ const draw = (x, y) => {
     ctx.beginPath()
 
     ctx.arc(
-        x - canvas.offsetLeft, 
-        y - canvas.offsetTop,
+        x - canvas.offsetLeft + xAdjust, 
+        y - canvas.offsetTop + yAdjust,
         brushSize / 2,
         0,
         2*Math.PI
@@ -82,6 +92,8 @@ const selectTool = ({ target }) => {
     }
 }
 
+
+
 const selectSize = ({ target }) => {
     const selectedTool = target.closest("button")
     const size = selectedTool.getAttribute("data-size")
@@ -89,6 +101,19 @@ const selectSize = ({ target }) => {
     sizeButtons.forEach((sizeButton) => sizeButton.classList.remove("active"))
     selectedTool.classList.add("active")
     brushSize = size
+    customCursorSvg.style.width = size;
+
+    if (size == 5) {
+        xAdjust = 2.5
+        yAdjust = 11.5
+    } else if (size == 10) {
+        xAdjust = 5
+        yAdjust = 9
+    } else {
+        xAdjust = size / 2
+        yAdjust = size / 2
+    }
+    
 }
 
 tools.forEach((tool) => {
@@ -102,3 +127,4 @@ sizeButtons.forEach((tool) => {
 buttonClear.addEventListener("click", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 })
+

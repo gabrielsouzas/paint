@@ -23,6 +23,21 @@ canvas {
     justify-content: center;
 }
 
+canvas {
+    cursor: none;
+}
+
+#custom-cursor {
+    position: absolute;
+    pointer-events: none;
+}
+
+#custom-cursor svg {
+    fill: #000; /* Cor do cursor */
+    width: 20px; /* Tamanho do cursor */
+    height: auto; /* Tamanho do cursor */
+}
+
 .tool-box {
     width: 110px;
     background-color: #fff;
